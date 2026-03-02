@@ -1,6 +1,6 @@
 # Real Estate Intelligence Platform
 
-Data pipeline and API that aggregates Dubai property market data, validates it
+Data pipeline and API that aggregates property market data, validates it
 deterministically, and serves pre-computed metrics for AI-driven SEO content generation.
 
 ## What It Does
