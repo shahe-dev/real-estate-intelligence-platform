@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dubai Real Estate Intelligence</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>🏢 Dubai Real Estate Intelligence</h1>
+                <p class="tagline">AI-Powered Analytics | Property Monitor Data | 2023-2025</p>
+            </div>
+            <div class="nav-status">
+                <div class="data-source-toggle">
+                    <select id="global-data-source" class="source-select">
+                        <option value="pm" selected>Property Monitor</option>
+                        <option value="dld">DLD Legacy</option>
+                    </select>
+                </div>
+                <span id="api-status" class="status-indicator"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Unlock Dubai's Real Estate Market Insights</h2>
+            <p>Powered by Property Monitor premium data (476K+ transactions) and AI-driven analytics</p>
+        </div>
+    </section>
+
+    <!-- Market Overview -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">📊 Market Overview</h2>
+            <div id="overview-stats" class="stats-grid">
+                <div class="stat-card loading">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-value">-</div>
+                    <div class="stat-label">Total Transactions</div>
+                </div>
+                <div class="stat-card loading">
+                    <div class="stat-icon">🏘️</div>
+                    <div class="stat-value">-</div>
+                    <div class="stat-label">Unique Areas</div>
+                </div>
+                <div class="stat-card loading">
+                    <div class="stat-icon">💎</div>
+                    <div class="stat-value">-</div>
+                    <div class="stat-label">Luxury Properties</div>
+                </div>
+                <div class="stat-card loading">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value">-</div>
+                    <div class="stat-label">Avg Price (AED)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Content Generation - HERO FEATURE -->
+    <section class="section feature-highlight">
+        <div class="container">
+            <div class="feature-header">
+                <h2 class="section-title">🤖 AI-Powered Content Generation</h2>
+                <p class="feature-subtitle">SEO-optimized real estate content with anti-hallucination safeguards</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Anti-Hallucination</h3>
+                    <p>Every statistic verified against Property Monitor transaction data. No made-up numbers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>SEO Optimized</h3>
+                    <p>Professional area guides, market reports, off-plan analyses, and developer profiles.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Full Transparency</h3>
+                    <p>Every claim backed by transaction IDs. Readers can verify all data independently.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Premium Data</h3>
+                    <p>Includes off-plan sales, developer info, and 476K+ verified transactions (2023-2025).</p>
+                </div>
+            </div>
+
+            <!-- Content Generator Interface -->
+            <div class="content-generator">
+                <h3>Try It: Generate Content</h3>
+
+                <!-- Content Type Selection -->
+                <div class="generator-row">
+                    <label class="gen-label">Content Type:</label>
+                    <select id="gen-content-type" class="select-input">
+                        <option value="area-guide">Area Guide (Single Area)</option>
+                        <option value="batch-guides">Batch Area Guides (Top 10)</option>
+                        <option value="market-report">Market Report</option>
+                        <option value="offplan-report">Off-Plan Market Report</option>
+                        <option value="developer-profile">Developer Profile</option>
+                        <option value="luxury-report">Luxury Market Report</option>
+                        <option value="supply-forecast">📊 Supply Forecast (Phase 2)</option>
+                        <option value="project-profile">🏗️ Project Profile (Phase 2)</option>
+                    </select>
+                </div>
+
+                <!-- Area Guide Options -->
+                <div id="area-guide-options" class="generator-row">
+                    <label class="gen-label">Select Area:</label>
+                    <select id="gen-area-select" class="select-input">
+                        <option value="">Select an area...</option>
+                    </select>
+                </div>
+
+                <!-- Market Report Options (Period-Based) -->
+                <div id="market-report-options" class="generator-row hidden">
+                    <label class="gen-label">Year:</label>
+                    <select id="gen-year" class="select-input">
+                        <option value="2025" selected>2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                    </select>
+                    <label class="gen-label">Period Type:</label>
+                    <select id="gen-period-type" class="select-input">
+                        <option value="monthly">Monthly</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="semi_annual">Semi-Annual</option>
+                        <option value="annual">Annual</option>
+                    </select>
+                    <label class="gen-label" id="period-number-label">Month:</label>
+                    <select id="gen-period-number" class="select-input">
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+
+                <!-- Developer Profile Options -->
+                <div id="developer-options" class="generator-row hidden">
+                    <label class="gen-label">Select Developer:</label>
+                    <select id="gen-developer-select" class="select-input">
+                        <option value="">Select a developer...</option>
+                    </select>
+                </div>
+
+                <!-- Off-Plan Report Options (Period-Based) -->
+                <div id="offplan-options" class="generator-row hidden">
+                    <label class="gen-label">Year:</label>
+                    <select id="gen-offplan-year" class="select-input">
+                        <option value="2025" selected>2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                    </select>
+                    <label class="gen-label">Period Type:</label>
+                    <select id="gen-offplan-period-type" class="select-input">
+                        <option value="monthly">Monthly</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="semi_annual">Semi-Annual</option>
+                        <option value="annual" selected>Annual</option>
+                    </select>
+                    <label class="gen-label" id="offplan-period-number-label">Period:</label>
+                    <select id="gen-offplan-period-number" class="select-input">
+                        <option value="1" selected>Full Year</option>
+                    </select>
+                </div>
+
+                <!-- Date Range (for area guides) -->
+                <div id="date-range-options" class="generator-row">
+                    <label class="gen-label">Data Range:</label>
+                    <select id="gen-date-range" class="select-input">
+                        <option value="all" selected>All Data (2023-2025)</option>
+                        <option value="recent">Recent Only (2024-2025)</option>
+                    </select>
+                </div>
+
+                <!-- Supply Forecast Options (Phase 2) -->
+                <div id="supply-forecast-options" class="generator-row hidden">
+                    <label class="gen-label">Start Quarter:</label>
+                    <select id="gen-start-quarter" class="select-input">
+                        <option value="Q1 2026" selected>Q1 2026</option>
+                        <option value="Q2 2026">Q2 2026</option>
+                        <option value="Q3 2026">Q3 2026</option>
+                        <option value="Q4 2026">Q4 2026</option>
+                        <option value="Q1 2027">Q1 2027</option>
+                    </select>
+                    <label class="gen-label">Quarters Ahead:</label>
+                    <select id="gen-quarters-ahead" class="select-input">
+                        <option value="4">4 Quarters</option>
+                        <option value="8" selected>8 Quarters (2 Years)</option>
+                        <option value="12">12 Quarters (3 Years)</option>
+                    </select>
+                </div>
+
+                <!-- Project Profile Options (Phase 2) -->
+                <div id="project-profile-options" class="generator-row hidden">
+                    <label class="gen-label">Select Area:</label>
+                    <select id="gen-project-area-select" class="select-input">
+                        <option value="">Select an area...</option>
+                    </select>
+                </div>
+
+                <!-- Verification Option (only for Market Reports) -->
+                <div id="verification-options" class="generator-row hidden">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="gen-with-verification">
+                        <span>Generate Verification Excel</span>
+                        <small class="checkbox-hint">(For data science team review)</small>
+                    </label>
+                </div>
+
+                <!-- Generate Button -->
+                <div class="generator-row">
+                    <button id="generate-btn" class="btn btn-primary btn-large">Generate Content</button>
+                </div>
+
+                <div id="generation-status" class="generation-status hidden"></div>
+            </div>
+
+            <!-- Sample Content Display -->
+            <div class="content-showcase">
+                <h3>📄 Sample Generated Content</h3>
+                <div id="sample-content" class="content-preview loading">
+                    Loading sample content...
+                </div>
+                <div id="content-list" class="content-list hidden">
+                    <!-- Generated content files will be listed here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Areas -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🏆 Top Performing Areas</h2>
+                <div class="controls">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="luxury-filter">
+                        <span>Luxury Only (5M+ AED)</span>
+                    </label>
+                </div>
+            </div>
+            <div id="areas-list" class="areas-grid">
+                <div class="loading-spinner">Loading areas...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Area Search & Details -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">🔍 Area Analysis</h2>
+            <div class="search-box">
+                <input type="text" id="area-search" placeholder="Search for an area (e.g., Downtown Dubai, Marina, Palm Jumeirah)...">
+                <button id="search-btn" class="btn btn-primary">Search</button>
+            </div>
+            <div id="area-details" class="area-details hidden">
+                <!-- Area details will be inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Area Comparison -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">⚖️ Compare Areas</h2>
+            <div class="comparison-controls">
+                <div class="area-selector">
+                    <select id="compare-area-1" class="select-input">
+                        <option value="">Select Area 1...</option>
+                    </select>
+                    <select id="compare-area-2" class="select-input">
+                        <option value="">Select Area 2...</option>
+                    </select>
+                    <select id="compare-area-3" class="select-input">
+                        <option value="">Select Area 3...</option>
+                    </select>
+                    <button id="compare-btn" class="btn btn-primary">Compare</button>
+                </div>
+            </div>
+            <div id="comparison-results" class="comparison-grid hidden">
+                <!-- Comparison results will be inserted here -->
+            </div>
+        </section>
+
+    <!-- Luxury Market -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">💎 Luxury Market (5M+ AED)</h2>
+            <div class="chart-container">
+                <canvas id="luxury-chart"></canvas>
+            </div>
+            <div id="luxury-table" class="data-table-container">
+                <!-- Luxury market table will be inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🏗️ Active Projects & Developments</h2>
+                <div class="controls">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="offplan-filter">
+                        <span>Off-Plan Only</span>
+                    </label>
+                </div>
+            </div>
+            <div id="projects-list" class="data-table-container">
+                <div class="loading-spinner">Loading projects...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supply Intelligence (Phase 2) -->
+    <section class="section supply-intelligence-section">
+        <div class="container">
+            <h2 class="section-title">📊 Supply Intelligence Dashboard</h2>
+            <p class="section-subtitle">Exclusive supply-demand correlation intelligence powered by AI</p>
+
+            <!-- Supply Intelligence Tabs -->
+            <div class="supply-tabs">
+                <button class="supply-tab active" data-tab="overview">Market Overview</button>
+                <button class="supply-tab" data-tab="opportunities">Opportunities</button>
+                <button class="supply-tab" data-tab="developers">Developer Reliability</button>
+                <button class="supply-tab" data-tab="forecast">Delivery Forecast</button>
+                <button class="supply-tab" data-tab="alerts">Market Alerts</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="supply-tab-overview" class="supply-tab-content active">
+                <h3>Supply-Demand Market Overview</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-emoji">🏘️</div>
+                        <div class="stat-value" id="supply-total-areas">-</div>
+                        <div class="stat-label">Areas Analyzed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-emoji">🏗️</div>
+                        <div class="stat-value" id="supply-total-units">-</div>
+                        <div class="stat-label">Off-Plan Units</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-emoji">⚠️</div>
+                        <div class="stat-value" id="supply-oversupplied">-</div>
+                        <div class="stat-label">Oversupplied Areas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-emoji">📈</div>
+                        <div class="stat-value" id="supply-avg-ratio">-</div>
+                        <div class="stat-label">Avg SD Ratio</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="supply-balance-chart"></canvas>
+                </div>
+            </div>
+
+            <div id="supply-tab-opportunities" class="supply-tab-content">
+                <h3>Investment Opportunities</h3>
+                <div id="opportunities-list" class="data-table-container">
+                    <div class="loading-spinner">Loading opportunities...</div>
+                </div>
+            </div>
+
+            <div id="supply-tab-developers" class="supply-tab-content">
+                <h3>Developer Reliability Scores</h3>
+                <div id="developers-reliability" class="data-table-container">
+                    <div class="loading-spinner">Loading developer data...</div>
+                </div>
+            </div>
+
+            <div id="supply-tab-forecast" class="supply-tab-content">
+                <h3>Quarterly Delivery Forecast</h3>
+                <div class="chart-container">
+                    <canvas id="delivery-forecast-chart"></canvas>
+                </div>
+                <div id="forecast-details" class="data-table-container">
+                    <div class="loading-spinner">Loading forecast...</div>
+                </div>
+            </div>
+
+            <div id="supply-tab-alerts" class="supply-tab-content">
+                <h3>Market Alerts</h3>
+                <div id="market-alerts" class="alerts-container">
+                    <div class="loading-spinner">Loading alerts...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Balance Drill-Down Modal -->
+    <div id="balance-modal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeBalanceModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Loading...</h3>
+                <button class="modal-close" onclick="closeBalanceModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-controls">
+                    <label>Sort by:</label>
+                    <select id="modal-sort" onchange="sortModalAreas()">
+                        <option value="opportunity">Opportunity Score</option>
+                        <option value="sd_ratio">Supply-Demand Ratio</option>
+                        <option value="price_growth">Price Growth</option>
+                        <option value="name">Area Name</option>
+                    </select>
+                </div>
+                <div id="modal-areas-list" class="modal-areas-list">
+                    <div class="loading-spinner">Loading areas...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Dubai Real Estate Intelligence Platform</p>
+            <p class="footer-meta">Powered by FastAPI, DuckDB & Claude AI | Data: Property Monitor (2023-2025)</p>
+            <div class="footer-links">
+                <a href="http://localhost:8001/docs" target="_blank">PM API Docs</a>
+                <a href="http://localhost:8000/docs" target="_blank">DLD API Docs</a>
+                <a href="#" onclick="alert('Contact: Head of SEO - Real Estate Brokerage, UAE')">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+# Environment variables (NEVER commit API keys!)
+.env
+.env.local
+.env.*.local
+
+# Service account credentials (SENSITIVE!)
+propmonitor service account/
+gsc service account/
+**/service-account*.json
+**/credentials*.json
+**/serviceaccount*.json
+*.credentials.json
+
+# Database files (too large for Git)
+*.db
+*.duckdb
+data/database/
+data/raw/*.csv
+data/exports/
+data/pm-projects-supply/
+data/projects_supply_data_08jan2026/
+
+# Python
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Generated content
+data/generated_content/
+
+# Logs
+*.log
+logs/
+
+# Backup files
+backup/
+*.zip
+*.bak
+
+# Local settings
+.claude/settings.local.json
+
+# OS files
+Thumbs.db
+.DS_Store
+nul
+# Internal data - never commit
+consulting-content/
+# Internal content audit directories
+
+# Service account credentials
+service-account/
+*service account*/
+*.json
+
+# Claude Code artifacts
+tmpclaude-*
+.claude/
+CLAUDE.md
+
+# Windows artifacts
+nul
+
+# Internal planning
+PLAN.md
+corrections-*
